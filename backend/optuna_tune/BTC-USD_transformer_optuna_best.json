@@ -1,0 +1,21 @@
+{
+  "model": "transformer",
+  "symbol": "BTC-USD",
+  "future_day": 1,
+  "best_mape": 0.08607661105414202,
+  "params": {
+    "lookback": 30,
+    "n_layers": 2,
+    "lr": 0.0031858813149103285,
+    "batch_size": 16,
+    "epochs": 27,
+    "units_l0": 19,
+    "units_l1": 72,
+    "dropout_l0": 0.10973519441754281,
+    "dropout_l1": 0.2389078760718717,
+    "d_model": 32,
+    "num_heads": 1,
+    "dff": 256,
+    "dropout_rate": 0.06344875563904911
+  }
+}

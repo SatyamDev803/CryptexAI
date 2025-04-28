@@ -1,0 +1,15 @@
+{
+  "model": "gru",
+  "symbol": "SOL-USD",
+  "future_day": 1,
+  "best_mape": 0.034448444021779934,
+  "params": {
+    "lookback": 90,
+    "n_layers": 1,
+    "lr": 0.001684155349675789,
+    "batch_size": 16,
+    "epochs": 17,
+    "units_l0": 125,
+    "dropout_l0": 0.09086470688506987
+  }
+}

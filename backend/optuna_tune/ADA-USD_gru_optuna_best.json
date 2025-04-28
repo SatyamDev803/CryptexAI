@@ -1,0 +1,17 @@
+{
+  "model": "gru",
+  "symbol": "ADA-USD",
+  "future_day": 1,
+  "best_mape": 0.033883301956033694,
+  "params": {
+    "lookback": 30,
+    "n_layers": 2,
+    "lr": 0.0015481160703372902,
+    "batch_size": 32,
+    "epochs": 19,
+    "units_l0": 241,
+    "units_l1": 244,
+    "dropout_l0": 0.11344352815119689,
+    "dropout_l1": 0.011388323159789437
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "model": "transformer",
+  "symbol": "ADA-USD",
+  "future_day": 1,
+  "best_mape": 0.05673448744097648,
+  "params": {
+    "lookback": 30,
+    "n_layers": 2,
+    "lr": 0.0001220609284832351,
+    "batch_size": 64,
+    "epochs": 46,
+    "units_l0": 59,
+    "units_l1": 31,
+    "dropout_l0": 0.12885156640381984,
+    "dropout_l1": 0.2360497210563452,
+    "d_model": 128,
+    "num_heads": 1,
+    "dff": 64,
+    "dropout_rate": 0.003779350161415451
+  }
+}

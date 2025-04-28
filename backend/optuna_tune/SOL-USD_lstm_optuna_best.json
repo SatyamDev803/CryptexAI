@@ -1,0 +1,15 @@
+{
+  "model": "lstm",
+  "symbol": "SOL-USD",
+  "future_day": 1,
+  "best_mape": 0.03843517447104729,
+  "params": {
+    "lookback": 90,
+    "n_layers": 1,
+    "lr": 0.00992731281833153,
+    "batch_size": 32,
+    "epochs": 32,
+    "units_l0": 78,
+    "dropout_l0": 0.2701500863312787
+  }
+}

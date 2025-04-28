@@ -1,0 +1,15 @@
+{
+  "model": "gru",
+  "symbol": "BTC-USD",
+  "future_day": 1,
+  "best_mape": 0.019817984660768,
+  "params": {
+    "lookback": 30,
+    "n_layers": 1,
+    "lr": 0.009825373647698064,
+    "batch_size": 16,
+    "epochs": 31,
+    "units_l0": 144,
+    "dropout_l0": 0.21424437875638924
+  }
+}

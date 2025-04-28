@@ -1,0 +1,15 @@
+{
+  "model": "gru",
+  "symbol": "ETH-USD",
+  "future_day": 1,
+  "best_mape": 0.026967569087560567,
+  "params": {
+    "lookback": 90,
+    "n_layers": 1,
+    "lr": 0.0027543640723972705,
+    "batch_size": 32,
+    "epochs": 40,
+    "units_l0": 119,
+    "dropout_l0": 0.04777479388250683
+  }
+}

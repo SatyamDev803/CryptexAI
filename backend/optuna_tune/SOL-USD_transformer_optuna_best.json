@@ -1,0 +1,21 @@
+{
+  "model": "transformer",
+  "symbol": "SOL-USD",
+  "future_day": 1,
+  "best_mape": 0.05959674964699921,
+  "params": {
+    "lookback": 60,
+    "n_layers": 2,
+    "lr": 0.005628628611860536,
+    "batch_size": 32,
+    "epochs": 43,
+    "units_l0": 109,
+    "units_l1": 243,
+    "dropout_l0": 0.1644126184417451,
+    "dropout_l1": 0.028515475691230363,
+    "d_model": 64,
+    "num_heads": 4,
+    "dff": 128,
+    "dropout_rate": 0.22468933580262024
+  }
+}

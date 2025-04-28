@@ -1,0 +1,15 @@
+{
+  "model": "lstm",
+  "symbol": "BTC-USD",
+  "future_day": 1,
+  "best_mape": 0.026823382436497907,
+  "params": {
+    "lookback": 60,
+    "n_layers": 1,
+    "lr": 0.007033881598634638,
+    "batch_size": 64,
+    "epochs": 50,
+    "units_l0": 147,
+    "dropout_l0": 0.2424564607927489
+  }
+}

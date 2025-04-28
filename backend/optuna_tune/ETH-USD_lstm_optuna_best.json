@@ -1,0 +1,15 @@
+{
+  "model": "lstm",
+  "symbol": "ETH-USD",
+  "future_day": 1,
+  "best_mape": 0.02950254330031429,
+  "params": {
+    "lookback": 60,
+    "n_layers": 1,
+    "lr": 0.007323669319321689,
+    "batch_size": 64,
+    "epochs": 16,
+    "units_l0": 22,
+    "dropout_l0": 0.10602991812315499
+  }
+}

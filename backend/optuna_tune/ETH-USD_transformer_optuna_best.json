@@ -1,0 +1,19 @@
+{
+  "model": "transformer",
+  "symbol": "ETH-USD",
+  "future_day": 1,
+  "best_mape": 0.034723853272638834,
+  "params": {
+    "lookback": 60,
+    "n_layers": 1,
+    "lr": 0.000305774492172153,
+    "batch_size": 32,
+    "epochs": 48,
+    "units_l0": 24,
+    "dropout_l0": 0.005707478803974542,
+    "d_model": 128,
+    "num_heads": 3,
+    "dff": 64,
+    "dropout_rate": 0.038840535842631085
+  }
+}

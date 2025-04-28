@@ -1,0 +1,23 @@
+{
+  "model": "transformer",
+  "symbol": "XRP-USD",
+  "future_day": 1,
+  "best_mape": 0.1233762758090648,
+  "params": {
+    "lookback": 30,
+    "n_layers": 3,
+    "lr": 0.000801490649929425,
+    "batch_size": 16,
+    "epochs": 17,
+    "units_l0": 22,
+    "units_l1": 51,
+    "units_l2": 29,
+    "dropout_l0": 0.0012441758713933604,
+    "dropout_l1": 0.030931424678990127,
+    "dropout_l2": 0.07055231993334832,
+    "d_model": 128,
+    "num_heads": 4,
+    "dff": 128,
+    "dropout_rate": 0.29326449424429096
+  }
+}
