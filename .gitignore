@@ -14,11 +14,14 @@ backend/node_modules/
 venv/
 backend/venv/
 
-# Build outputs
+# Build outputs (backend only)
 dist/
 dist-ssr/
 build/
 out/
+
+# Keep the frontend build folder for deployment
+!frontend/dist/
 
 # Local environment files
 *.local
@@ -70,7 +73,6 @@ Desktop.ini
 *.pid.lock
 
 # Miscellaneous
-*.log
 *.gz
 *.tgz
 *.zip
