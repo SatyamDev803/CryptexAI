@@ -6,10 +6,11 @@
     "backend": "cd backend && python main.py",
     "frontend": "cd frontend && npm run dev",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "both": "concurrently \"cd frontend && npm run dev\" \"cd backend && python main.py\"",
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "both": "concurrently \"npm run frontend\" \"npm run backend\"",
     "install:all": "npm install && cd frontend && npm install"
   },
-  "dependencies": {
-    "concurrently": "^8.2.2"
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
-} 
+}

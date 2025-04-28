@@ -3,16 +3,15 @@ import argparse
 import uvicorn
 from src.api import app
 
-
 def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Bitcoin Price Prediction Backend")
     parser.add_argument(
-        "--host", type=str, default="127.0.0.1",
+        "--host", type=str, default="0.0.0.0",
         help="Host to run the server on"
     )
     parser.add_argument(
-        "--port", type=int, default=8000,
+        "--port", type=int, default=int(os.environ.get("PORT", 8000)),
         help="Port to run the server on"
     )
     parser.add_argument(
@@ -20,7 +19,6 @@ def parse_args():
         help="Enable auto-reload for development"
     )
     return parser.parse_args()
-
 
 if __name__ == "__main__":
     args = parse_args()
@@ -35,4 +33,4 @@ if __name__ == "__main__":
         host=args.host,
         port=args.port,
         reload=args.reload
-    ) 
+    )
