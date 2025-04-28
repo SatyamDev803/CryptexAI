@@ -11,6 +11,10 @@
     "install:all": "npm install && cd frontend && npm install",
     "build": "cd frontend && npm run build"
   },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
     "concurrently": "^9.1.2",
