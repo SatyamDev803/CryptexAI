@@ -1,15 +1,24 @@
-# Bitcoin Price Prediction with Deep Learning
+# CryptexAI - Cryptocurrency Price Prediction Platform
 
-A full-stack application for predicting Bitcoin prices using deep learning models, with interactive visualizations and trading strategy backtesting.
+A comprehensive full-stack application leveraging state-of-the-art deep learning models for cryptocurrency price prediction, interactive visualizations, and advanced trading strategy backtesting. Built with Python, FastAPI, TensorFlow, and React.
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.68.0+-00a393.svg)](https://fastapi.tiangolo.com/)
+[![React 18+](https://img.shields.io/badge/react-18.0+-61dafb.svg)](https://reactjs.org/)
 
 ## Project Overview
 
-This project combines deep learning models with a modern web interface to:
+CryptexAI is a sophisticated cryptocurrency prediction platform that combines cutting-edge deep learning architectures with an intuitive web interface. The platform offers:
 
-1. Predict Bitcoin prices using LSTM, GRU, and Transformer models
-2. Visualize price trends and predictions
-3. Compare model performance
-4. Backtest trading strategies based on model predictions
+1. Advanced price predictions for multiple cryptocurrencies (BTC, ETH, ADA, SOL, XRP) using:
+   - LSTM (Long Short-Term Memory) networks
+   - GRU (Gated Recurrent Unit) networks
+   - Transformer models with attention mechanisms
+2. Real-time price tracking and visualization with interactive charts
+3. Comprehensive model performance metrics and comparisons
+4. Advanced backtesting engine for strategy validation
+5. API endpoints for seamless integration with external applications
 
 ## Project Structure
 
@@ -48,18 +57,22 @@ This project combines deep learning models with a modern web interface to:
 - Node.js 14+
 - npm or yarn
 
-### Option 1: Running with Script (Recommended)
+### Quick Start (Recommended)
 
-We've provided scripts to run both the backend and frontend concurrently:
+1. Clone the repository:
+```bash
+git clone https://github.com/SatyamDev803/CryptexAI.git
+cd CryptexAI
+```
 
-#### Windows (PowerShell):
-```
-.\run-dev.ps1
+2. Install root dependencies:
+```bash
+npm install
 ```
 
-#### Windows (Command Prompt):
-```
-run-dev.bat
+3. Run both services:
+```bash
+npm run dev
 ```
 
 ### Option 2: Running with npm (Alternative)
@@ -109,22 +122,77 @@ run-dev.bat
 
 ## Features
 
-- **Price Prediction**: Forecast Bitcoin prices using multiple deep learning models
-- **Model Comparison**: Compare performance metrics between different models
-- **Backtesting**: Test trading strategies based on model predictions
-- **Interactive Visualization**: View and analyze price trends and predictions
-- **API Integration**: Connect custom applications to the prediction API
+### Model Features
+- **Multi-Cryptocurrency Support**: Predictions for BTC, ETH, ADA, SOL, and XRP
+- **Multiple Model Architectures**: 
+  - LSTM for long-term dependency learning
+  - GRU for efficient training and memory usage
+  - Transformer models with self-attention mechanisms
+- **Hyperparameter Optimization**: Automated model tuning using Optuna
+- **Real-time Predictions**: Live price forecasting with configurable timeframes
+
+### Trading Features
+- **Advanced Backtesting Engine**: 
+  - Custom strategy implementation
+  - Performance metrics calculation
+  - Risk assessment tools
+- **Trading Signals**: 
+  - Buy/Sell indicators based on model predictions
+  - Confidence scores for each signal
+  - Multiple timeframe analysis
+
+### Visualization Features
+- **Interactive Charts**: 
+  - Real-time price updates
+  - Technical indicators
+  - Prediction overlays
+- **Model Performance Dashboards**:
+  - Accuracy metrics
+  - Error analysis
+  - Model comparison tools
+- **Backtesting Results**:
+  - Profit/Loss visualization
+  - Trade history
+  - Performance metrics
+
+### API Features
+- **RESTful Endpoints**: 
+  - Price predictions
+  - Model metrics
+  - Historical data
+- **WebSocket Support**: Real-time price and prediction updates
+- **Authentication**: Secure API access with key management
+- **Rate Limiting**: Controlled access to API resources
 
 ## Troubleshooting
 
-If you encounter issues with Tailwind CSS, try reinstalling the dependencies:
-
+### Tailwind CSS Issues
+If you encounter styling issues:
 ```bash
 cd frontend
 npm uninstall tailwindcss postcss autoprefixer
 npm install -D tailwindcss@3.3.3 postcss@8.4.29 autoprefixer@10.4.15
 npx tailwindcss init -p
 ```
+
+### Port Conflicts
+- Frontend runs on port 5173 by default
+- Backend runs on port 8000 by default
+- Modify these in `frontend/vite.config.js` and `backend/main.py` respectively if needed
+
+### Common Issues
+1. **Model Loading Errors**:
+   - Ensure you have enough RAM (8GB+ recommended)
+   - Check if model files are properly downloaded
+   
+2. **Data Fetching Issues**:
+   - Verify internet connection
+   - Check yfinance API status
+   
+3. **Performance Issues**:
+   - Consider reducing prediction window size
+   - Optimize browser cache settings
+   - Check system resources usage
 
 ## License
 
