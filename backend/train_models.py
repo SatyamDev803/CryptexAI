@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-"""
-Script to train and save LSTM, GRU, and Transformer models.
-"""
 import os
 import argparse
 import numpy as np

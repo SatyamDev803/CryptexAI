@@ -45,15 +45,15 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '
 MODELS_DIR = os.path.join(BASE_DIR, 'models')
 
 def get_data_loader():
-    """Get or create data loader singleton."""
+    # Get or create data loader singleton
     global DATA_LOADER
     if DATA_LOADER is None:
         DATA_LOADER = DataLoader(symbol="BTC-USD")
     return DATA_LOADER
 
 
+# Get or load a model for the given symbol and type
 def get_model(model_type: str, symbol: str):
-    """Get or load a model for the given symbol and type."""
     global MODELS
     key = f"{symbol}_{model_type.lower()}"
     if key in MODELS:
@@ -87,8 +87,8 @@ def get_model(model_type: str, symbol: str):
     return model
 
 
+# Create a mock model for testing purposes
 def create_mock_model(model_type: str):
-    """Create a mock model for testing purposes."""
     # Different prediction patterns for different model types
     if model_type.upper() == "LSTM":
         model = LSTMModel()
@@ -111,7 +111,7 @@ def create_mock_model(model_type: str):
     original_predict = model.predict
     
     def mock_predict(x_input):
-        """Mock prediction function that returns realistic values."""
+        # Mock prediction function that returns realistic values
         # Generate a prediction based on the last value in the input
         last_value = x_input[0][-1][0]
         
@@ -142,7 +142,7 @@ def create_mock_model(model_type: str):
 
 @app.get("/", tags=["Info"])
 async def root():
-    """Get API information."""
+    # Get API information
     return {
         "name": "Bitcoin Price Prediction API",
         "version": "1.0.0",
@@ -152,13 +152,13 @@ async def root():
 
 @app.get("/api/health", tags=["Info"])
 async def health_check():
-    """Check API health."""
+    # Check API health
     return {"status": "ok", "timestamp": datetime.now().isoformat()}
 
 
 @app.get("/api/models", tags=["Models"])
 async def list_models():
-    """List available models."""
+    # List available models
     available_models = []
     
     # Check for LSTM model
@@ -185,7 +185,7 @@ async def get_latest_data(
     days: int = Query(30, description="Number of days of data to return"),
     symbol: str = Query("bitcoin", description="Cryptocurrency id (e.g., bitcoin)")
 ) -> Dict[str, Any]:
-    """Get the latest Bitcoin price data."""
+    # Get the latest Bitcoin price data
     ticker = SYMBOL_MAP.get(symbol.lower(), symbol)
     loader = DataLoader(symbol=ticker)
     
@@ -220,17 +220,6 @@ async def predict(
     days: int = Query(30, description="Number of days to predict"),
     symbol: str = Query("bitcoin", description="Cryptocurrency id (e.g., bitcoin)")
 ):
-    """
-    Get Bitcoin price predictions for the specified number of days ahead.
-    
-    Args:
-        model_type: Type of model to use (LSTM, GRU, or transformer)
-        days: Number of days to predict
-        symbol: Cryptocurrency symbol (e.g., bitcoin, ethereum)
-        
-    Returns:
-        Dictionary with predictions
-    """
     try:
         # Normalize symbol for consistency
         symbol_lower = symbol.lower()
@@ -321,8 +310,9 @@ async def predict(
         # Return mock data as last resort
         return generate_mock_prediction_response(symbol, model_type, days)
 
+
+# Generate realistic synthetic predictions when model prediction fails
 def generate_synthetic_predictions(ticker, days):
-    """Generate realistic synthetic predictions when model prediction fails."""
     # Set base price based on crypto
     if 'BTC' in ticker or ticker.lower() == 'bitcoin':
         base_price = 84000.0
@@ -337,10 +327,9 @@ def generate_synthetic_predictions(ticker, days):
     else:
         base_price = 100.0
         
-    # Generate random price trend - use a more conservative trend factor
-    np.random.seed(42)  # for reproducibility
+    # Generate random price trend 
+    np.random.seed(42) 
     
-    # Different cryptos have different volatilities
     if 'BTC' in ticker or ticker.lower() == 'bitcoin':
         trend_factor = 0.001  # 0.1% daily trend
         volatility = 0.01  # 1% volatility
@@ -354,7 +343,7 @@ def generate_synthetic_predictions(ticker, days):
     preds = []
     current_price = base_price
     for day in range(days):
-        # Add a small daily trend with some noise
+        # A small daily trend with some noise
         random_change = np.random.normal(0, volatility)
         new_price = current_price * (1 + trend_factor + random_change)
         preds.append(new_price)
@@ -362,8 +351,9 @@ def generate_synthetic_predictions(ticker, days):
         
     return np.array(preds)
 
+
+# Generate a complete mock prediction response when everything else fails
 def generate_mock_prediction_response(symbol, model_type, days):
-    """Generate a complete mock prediction response when everything else fails."""
     ticker = SYMBOL_MAP.get(symbol.lower(), symbol)
     
     # Set base price based on crypto
@@ -410,12 +400,13 @@ def generate_mock_prediction_response(symbol, model_type, days):
     }
 
 
+
+# Compare predictions from different models
 @app.get("/api/compare-models", tags=["Models"])
 async def compare_models(
     days: int = Query(14, description="Number of days to predict"),
     symbol: str = Query("bitcoin", description="Cryptocurrency symbol")
 ):
-    """Compare predictions from different models."""
     try:
         # Normalize symbol
         symbol_lower = symbol.lower()
@@ -474,7 +465,7 @@ async def compare_models(
         transformer_volatility = 0.005  # 0.5% volatility
         
         # Generate a set of random changes for each model
-        np.random.seed(42)  # For reproducibility
+        np.random.seed(42) 
         for i in range(days):
             # LSTM predictions (more stable)
             lstm_change = np.random.normal(lstm_trend, lstm_volatility)
@@ -524,6 +515,7 @@ async def compare_models(
         raise HTTPException(status_code=500, detail=f"Error comparing models: {str(e)}")
 
 
+# Run a backtest of the model using historical data
 @app.get("/api/backtest/{model_type}", tags=["Backtest"])
 async def run_backtest(
     model_type: str,
@@ -532,7 +524,6 @@ async def run_backtest(
     initial_balance: float = Query(10000, description="Initial balance"),
     symbol: str = Query("bitcoin", description="Cryptocurrency symbol")
 ):
-    """Run a backtest of the model using historical data."""
     try:
         # Map symbol to ticker for consistent handling
         symbol_lower = symbol.lower()
@@ -589,10 +580,10 @@ async def run_backtest(
         X_test = np.array(X_test).reshape(len(X_test), lookback, 1)
         print(f"Prepared {len(X_test)} test instances for prediction")
         
-        # Create backtester with a smaller threshold (0.005 = 0.5%) to generate more trades
-        # Use adaptive threshold based on data volatility
+        # backtester with a smaller threshold (0.005 = 0.5%) to generate more trades
+        # adaptive threshold based on data volatility
         price_volatility = np.std(prices) / np.mean(prices)
-        adaptive_threshold = min(0.005, price_volatility * 0.5)  # Use smaller of 0.5% or half of volatility
+        adaptive_threshold = min(0.005, price_volatility * 0.5)  # smaller of 0.5% or half of volatility
         print(f"Price volatility: {price_volatility:.4f}, adaptive threshold: {adaptive_threshold:.4f}")
         
         backtester = Backtester(
@@ -601,7 +592,7 @@ async def run_backtest(
             commission=0.001  # 0.1% commission
         )
         
-        # Run backtest with the adaptive threshold instead of the user's threshold
+        # Running backtest with the adaptive threshold instead of the user's threshold
         # to ensure we generate some trades for testing
         results = backtester.run(
             X_test=X_test,
@@ -716,8 +707,9 @@ async def run_backtest(
         print(f"Error in backtest endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error running backtest: {str(e)}")
 
+
+# Calculate win rate percentage from trades
 def calculate_win_rate(trades):
-    """Calculate win rate percentage from trades."""
     if not trades:
         return 0.0
     
@@ -743,8 +735,9 @@ def calculate_win_rate(trades):
     
     return (winning_trades / completed_trades * 100) if completed_trades > 0 else 0.0
 
+
+# Format trades to match frontend expectations
 def format_trades(trades):
-    """Format trades to match frontend expectations."""
     if not trades:
         return []
         
@@ -782,8 +775,9 @@ def format_trades(trades):
             
     return formatted_trades
 
+
+# Format balance history to match frontend expectations
 def format_balance_history(history):
-    """Format balance history to match frontend expectations."""
     if not history:
         # Return at least two points to prevent chart errors
         now = datetime.now()

@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-"""
-Script for hyperparameter tuning LSTMModel using Optuna.
-"""
 import argparse
 import json
 import optuna

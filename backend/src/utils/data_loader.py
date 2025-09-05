@@ -7,15 +7,7 @@ from typing import Dict, Tuple, List, Any, Union, Optional
 
 
 class DataLoader:
-    """Utility for loading and preprocessing cryptocurrency data."""
-    
     def __init__(self, symbol: str = "BTC-USD"):
-        """
-        Initialize the data loader.
-        
-        Args:
-            symbol: Symbol to fetch data for
-        """
         self.symbol = symbol
         self.scaler = MinMaxScaler(feature_range=(0, 1))
         self.feat_scaler = MinMaxScaler(feature_range=(0, 1))
@@ -28,18 +20,7 @@ class DataLoader:
         source: str = "yfinance",
         csv_path: Optional[str] = None
     ) -> pd.DataFrame:
-        """
-        Fetch cryptocurrency data.
-        
-        Args:
-            start_date: Start date for fetching data
-            end_date: End date for fetching data (default: today)
-            source: Data source ("yfinance" or "csv")
-            csv_path: Path to CSV file if source is "csv"
-            
-        Returns:
-            DataFrame containing price data
-        """
+
         if end_date is None:
             end_date = datetime.now().date().isoformat()
 
@@ -76,16 +57,6 @@ class DataLoader:
         return self._generate_synthetic_data(start_date, end_date)
         
     def _generate_synthetic_data(self, start_date, end_date) -> pd.DataFrame:
-        """
-        Generate synthetic price data when no real data is available.
-        
-        Args:
-            start_date: Start date 
-            end_date: End date
-            
-        Returns:
-            DataFrame with synthetic price data
-        """
         # Convert dates to datetime objects
         start = pd.to_datetime(start_date)
         end = pd.to_datetime(end_date)
@@ -135,19 +106,7 @@ class DataLoader:
         test_split_date: Optional[Union[str, datetime]] = None,
         test_size: float = 0.2
     ) -> Dict[str, Any]:
-        """
-        Prepare data for training and testing.
-        
-        Args:
-            prediction_days: Number of days to use for prediction
-            future_day: Number of days in the future to predict
-            target_column: Column to predict
-            test_split_date: Date to split training and testing data
-            test_size: Fraction of data to use for testing if test_split_date is None
-            
-        Returns:
-            Dictionary containing training and testing data
-        """
+
         if self.data is None:
             raise ValueError("Data not loaded. Call fetch_data() first.")
         
@@ -260,13 +219,4 @@ class DataLoader:
         }
     
     def inverse_transform(self, scaled_data: np.ndarray) -> np.ndarray:
-        """
-        Inverse transform scaled data.
-        
-        Args:
-            scaled_data: Scaled data
-            
-        Returns:
-            Original scale data
-        """
         return self.scaler.inverse_transform(scaled_data.reshape(-1, 1)).flatten()

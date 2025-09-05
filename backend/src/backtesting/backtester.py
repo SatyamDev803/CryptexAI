@@ -6,25 +6,14 @@ from datetime import datetime
 from ..models.base_model import BaseModel
 
 
+# Backtester for simulating trading strategies on historical data
 class Backtester:
-    """
-    Backtester for simulating trading strategies on historical data.
-    """
-    
     def __init__(
         self,
         model: BaseModel,
         initial_balance: float = 10000.0,
         commission: float = 0.001,  # 0.1% commission per trade
     ):
-        """
-        Initialize the backtester.
-        
-        Args:
-            model: Model to use for predictions
-            initial_balance: Initial account balance
-            commission: Commission rate per trade
-        """
         self.model = model
         self.initial_balance = initial_balance
         self.commission = commission
@@ -37,19 +26,7 @@ class Backtester:
         threshold: float = 0.01,  # 1% predicted change threshold for action
         position_size: float = 1.0,  # Fraction of available capital to use per trade
     ) -> Dict[str, Any]:
-        """
-        Run backtest simulation.
         
-        Args:
-            X_test: Test features for prediction
-            prices: Actual prices corresponding to X_test
-            dates: Dates corresponding to prices
-            threshold: Minimum price change threshold to trigger a trade
-            position_size: Fraction of available capital to use per trade
-            
-        Returns:
-            Dictionary with backtest results
-        """
         # Get predictions
         predictions = self.model.predict(X_test)
         

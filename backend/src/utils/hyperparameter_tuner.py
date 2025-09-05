@@ -7,14 +7,11 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import logging
 
-# Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 
 class HyperparameterTuner:
-    """Utility for tuning model hyperparameters using Optuna."""
-    
     def __init__(
         self,
         model_builder: Callable,
@@ -29,22 +26,7 @@ class HyperparameterTuner:
         storage: Optional[str] = None,
         save_path: Optional[str] = "results/hyperparameter_tuning",
     ):
-        """
-        Initialize the hyperparameter tuner.
-        
-        Args:
-            model_builder: Function to build and return a model
-            x_train: Training features
-            y_train: Training targets
-            x_val: Validation features (optional, if not provided, will use validation_split)
-            y_val: Validation targets (optional, if not provided, will use validation_split)
-            validation_split: Fraction of training data to use for validation if x_val and y_val not provided
-            n_trials: Number of trials to run
-            timeout: Maximum time in seconds for optimization, or None for no limit
-            study_name: Name of the Optuna study
-            storage: Database URL for Optuna storage or None for in-memory
-            save_path: Path to save results
-        """
+
         self.model_builder = model_builder
         self.x_train = x_train
         self.y_train = y_train
@@ -64,25 +46,9 @@ class HyperparameterTuner:
         self.study = None
     
     def objective(self, trial: optuna.Trial) -> float:
-        """
-        Objective function for Optuna optimization.
-        This method should be overridden by subclasses.
-        
-        Args:
-            trial: Optuna trial object
-            
-        Returns:
-            Validation loss or metric to minimize
-        """
         raise NotImplementedError("Subclasses must implement objective method")
     
     def optimize(self) -> Dict[str, Any]:
-        """
-        Run the hyperparameter optimization.
-        
-        Returns:
-            Dictionary with study results
-        """
         # Create or load study
         self.study = optuna.create_study(
             study_name=self.study_name,
@@ -148,12 +114,6 @@ class HyperparameterTuner:
         }
     
     def _plot_optimization_history(self, save_path: Optional[str] = None) -> None:
-        """
-        Plot optimization history.
-        
-        Args:
-            save_path: Path to save the plot image
-        """
         plt.figure(figsize=(10, 6))
         optuna.visualization.matplotlib.plot_optimization_history(self.study)
         
@@ -163,12 +123,6 @@ class HyperparameterTuner:
             logger.info(f"Optimization history plot saved to {save_path}")
     
     def _plot_param_importances(self, save_path: Optional[str] = None) -> None:
-        """
-        Plot parameter importances.
-        
-        Args:
-            save_path: Path to save the plot image
-        """
         try:
             plt.figure(figsize=(10, 8))
             optuna.visualization.matplotlib.plot_param_importances(self.study)
@@ -182,18 +136,7 @@ class HyperparameterTuner:
 
 
 class LSTMTuner(HyperparameterTuner):
-    """Hyperparameter tuner for LSTM models."""
-    
     def objective(self, trial: optuna.Trial) -> float:
-        """
-        Objective function for LSTM hyperparameter tuning.
-        
-        Args:
-            trial: Optuna trial object
-            
-        Returns:
-            Validation loss
-        """
         # Define hyperparameters to tune
         lstm_units_1 = trial.suggest_int('lstm_units_1', 32, 128, step=16)
         lstm_units_2 = trial.suggest_int('lstm_units_2', 32, 128, step=16)
@@ -237,18 +180,7 @@ class LSTMTuner(HyperparameterTuner):
 
 
 class GRUTuner(HyperparameterTuner):
-    """Hyperparameter tuner for GRU models."""
-    
     def objective(self, trial: optuna.Trial) -> float:
-        """
-        Objective function for GRU hyperparameter tuning.
-        
-        Args:
-            trial: Optuna trial object
-            
-        Returns:
-            Validation loss
-        """
         # Define hyperparameters to tune
         gru_units_1 = trial.suggest_int('gru_units_1', 32, 128, step=16)
         gru_units_2 = trial.suggest_int('gru_units_2', 32, 128, step=16)

@@ -11,8 +11,6 @@ from .base_model import BaseModel
 
 
 class TransformerModel(BaseModel):
-    """Transformer model for time series prediction"""
-    
     def __init__(
         self,
         name: str = "Transformer",
@@ -25,20 +23,6 @@ class TransformerModel(BaseModel):
         loss: str = "mean_squared_error",
         input_shape: Optional[Tuple[int, int]] = None,
     ):
-        """
-        Initialize the Transformer model.
-        
-        Args:
-            name: Model name
-            num_layers: Number of transformer layers
-            d_model: Dimension of the model
-            num_heads: Number of attention heads
-            dff: Dimension of the feed forward network
-            dropout_rate: Dropout rate
-            optimizer: Optimizer for training
-            loss: Loss function for training
-            input_shape: Input shape of (timesteps, features)
-        """
         super().__init__(name=name)
         self.num_layers = num_layers
         self.d_model = d_model
@@ -51,12 +35,6 @@ class TransformerModel(BaseModel):
         self.model = None
         
     def build_model(self, input_shape: Tuple[int, int]) -> None:
-        """
-        Build the Transformer model architecture.
-        
-        Args:
-            input_shape: Input shape of (timesteps, features)
-        """
         # Input shape should be (batch_size, seq_len, features)
         inputs = Input(shape=input_shape)
         x = inputs
@@ -89,8 +67,8 @@ class TransformerModel(BaseModel):
         self.model = model
         self.input_shape = input_shape
     
+        # Compute static positional encoding matrix
     def _get_positional_encoding(self, seq_len: int, feature_dim: int) -> np.ndarray:
-        """Compute static positional encoding matrix."""
         pos = np.arange(seq_len)[:, np.newaxis]
         i = np.arange(feature_dim)[np.newaxis, :]
         angle_rates = 1 / np.power(10000, (2 * (i // 2)) / np.float32(feature_dim))
@@ -99,8 +77,8 @@ class TransformerModel(BaseModel):
         angle_rads[:, 1::2] = np.cos(angle_rads[:, 1::2])
         return angle_rads[np.newaxis, ...]
     
+        # Creates a transformer block
     def _transformer_block(self, inputs, d_model, num_heads, dff, dropout_rate):
-        """Creates a transformer block."""
         # Multi-head attention
         attention_output = MultiHeadAttention(
             num_heads=num_heads, key_dim=d_model // num_heads
@@ -133,22 +111,7 @@ class TransformerModel(BaseModel):
         patience: int = 10,
         **kwargs
     ) -> Dict[str, Any]:
-        """
-        Train the Transformer model.
         
-        Args:
-            X_train: Training features of shape (samples, timesteps, features)
-            y_train: Target values of shape (samples,)
-            epochs: Number of training epochs
-            batch_size: Batch size
-            validation_split: Fraction of data for validation
-            early_stopping: Whether to use early stopping
-            patience: Patience for early stopping
-            **kwargs: Additional parameters
-            
-        Returns:
-            Dictionary containing training history and metrics
-        """
         if self.model is None:
             if self.input_shape is None:
                 self.input_shape = (X_train.shape[1], X_train.shape[2])
@@ -183,27 +146,12 @@ class TransformerModel(BaseModel):
         }
     
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """
-        Generate predictions for the given data.
-        
-        Args:
-            X: Input features of shape (samples, timesteps, features)
-            
-        Returns:
-            Predictions of shape (samples,)
-        """
         if not self.is_fitted or self.model is None:
             raise ValueError("Model must be trained before prediction")
             
         return self.model.predict(X).flatten()
     
     def save(self, path: str) -> None:
-        """
-        Save the model to disk.
-        
-        Args:
-            path: Path to save the model
-        """
         if not self.is_fitted or self.model is None:
             raise ValueError("Model must be trained before saving")
             
@@ -214,12 +162,6 @@ class TransformerModel(BaseModel):
         self.model.save(path)
         
     def load(self, path: str) -> None:
-        """
-        Load the model from disk.
-        
-        Args:
-            path: Path to load the model from
-        """
         if not os.path.exists(path):
             raise FileNotFoundError(f"Model file not found at {path}")
             

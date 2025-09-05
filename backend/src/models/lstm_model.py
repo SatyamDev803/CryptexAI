@@ -12,7 +12,6 @@ from .base_model import BaseModel
 
 
 class LSTMModel(BaseModel):
-    """LSTM model for time series prediction"""
     
     def __init__(
         self,
@@ -23,17 +22,7 @@ class LSTMModel(BaseModel):
         loss: Union[str, Huber] = Huber(),
         input_shape: Optional[Tuple[int, int]] = None,
     ):
-        """
-        Initialize the LSTM model.
-        
-        Args:
-            name: Model name
-            lstm_units: Number of units in each LSTM layer
-            dropout_rates: Dropout rate after each LSTM layer
-            optimizer: Optimizer for training
-            loss: Loss function for training
-            input_shape: Input shape of (timesteps, features)
-        """
+       
         super().__init__(name=name)
         self.lstm_units = lstm_units
         self.dropout_rates = dropout_rates
@@ -43,12 +32,6 @@ class LSTMModel(BaseModel):
         self.model = None
         
     def build_model(self, input_shape: Tuple[int, int]) -> None:
-        """
-        Build the LSTM model architecture.
-        
-        Args:
-            input_shape: Input shape of (timesteps, features)
-        """
         model = Sequential()
         
         # First LSTM layer
@@ -93,22 +76,7 @@ class LSTMModel(BaseModel):
         patience: int = 10,
         **kwargs
     ) -> Dict[str, Any]:
-        """
-        Train the LSTM model.
-        
-        Args:
-            X_train: Training features of shape (samples, timesteps, features)
-            y_train: Target values of shape (samples,)
-            epochs: Number of training epochs
-            batch_size: Batch size
-            validation_split: Fraction of data for validation
-            early_stopping: Whether to use early stopping
-            patience: Patience for early stopping
-            **kwargs: Additional parameters
-            
-        Returns:
-            Dictionary containing training history and metrics
-        """
+
         if self.model is None:
             if self.input_shape is None:
                 self.input_shape = (X_train.shape[1], X_train.shape[2])
@@ -151,27 +119,12 @@ class LSTMModel(BaseModel):
         }
     
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """
-        Generate predictions for the given data.
-        
-        Args:
-            X: Input features of shape (samples, timesteps, features)
-            
-        Returns:
-            Predictions of shape (samples,)
-        """
         if not self.is_fitted or self.model is None:
             raise ValueError("Model must be trained before prediction")
             
         return self.model.predict(X).flatten()
     
     def save(self, path: str) -> None:
-        """
-        Save the model to disk.
-        
-        Args:
-            path: Path to save the model
-        """
         if not self.is_fitted or self.model is None:
             raise ValueError("Model must be trained before saving")
             
@@ -182,12 +135,6 @@ class LSTMModel(BaseModel):
         self.model.save(path)
         
     def load(self, path: str) -> None:
-        """
-        Load the model from disk.
-        
-        Args:
-            path: Path to load the model from
-        """
         if not os.path.exists(path):
             raise FileNotFoundError(f"Model file not found at {path}")
             

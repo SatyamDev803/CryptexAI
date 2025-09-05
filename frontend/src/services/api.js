@@ -1,8 +1,5 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
-/**
- * Generic request function
- */
 async function request(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;
   
@@ -41,21 +38,13 @@ async function request(endpoint, options = {}) {
   }
 }
 
-/**
- * Health check
- */
+
 export const checkHealth = () => request('/health');
 
-/**
- * Fetch available models
- */
+
 export const getModels = () => request('/models');
 
-/**
- * Fetch latest cryptocurrency price data
- * @param {number} days - Number of days of data to return
- * @param {string} symbol - Symbol of the cryptocurrency (e.g., 'BTC-USD', 'ETH-USD')
- */
+
 export const getLatestData = async (days = 30, symbol = 'BTC-USD') => {
   try {
     return await request(`/data/latest?days=${days}&symbol=${symbol}`);
@@ -65,12 +54,7 @@ export const getLatestData = async (days = 30, symbol = 'BTC-USD') => {
   }
 };
 
-/**
- * Get price predictions
- * @param {string} modelType - Model type (lstm, gru, etc.)
- * @param {number} days - Number of days to predict
- * @param {string} symbol - Symbol of the cryptocurrency (e.g., 'BTC-USD', 'ETH-USD')
- */
+
 export const getPredictions = async (modelType, days = 30, symbol = 'BTC-USD') => {
   try {
     return await request(`/predict/${modelType}?days=${days}&symbol=${symbol}`);
@@ -80,14 +64,7 @@ export const getPredictions = async (modelType, days = 30, symbol = 'BTC-USD') =
   }
 };
 
-/**
- * Run a backtest
- * @param {string} modelType - Model type (lstm, gru, etc.)
- * @param {number} days - Number of days for backtesting
- * @param {number} threshold - Price change threshold for trade signals
- * @param {number} initialBalance - Initial balance
- * @param {string} symbol - Symbol of the cryptocurrency (e.g., 'BTC-USD', 'ETH-USD')
- */
+
 export const runBacktest = async (
   modelType, 
   days = 365, 
@@ -102,11 +79,7 @@ export const runBacktest = async (
   return await request(url);
 };
 
-/**
- * Get model comparison data
- * @param {string} symbol - Symbol of the cryptocurrency (e.g., 'BTC-USD', 'ETH-USD')
- * @param {number} days - Number of days to predict
- */
+
 export const modelComparison = async (symbol = 'BTC-USD', days = 14) => {
   try {
     return await request(`/compare-models?days=${days}&symbol=${symbol}`);
@@ -116,9 +89,7 @@ export const modelComparison = async (symbol = 'BTC-USD', days = 14) => {
   }
 };
 
-/**
- * Mock data generation for development/demonstration
- */
+
 export const generateMockData = {
   // Mock price history for the last 30 days
   priceHistory: (symbol = 'BTC-USD', days = 30) => {

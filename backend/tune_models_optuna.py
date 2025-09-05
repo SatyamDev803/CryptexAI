@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-"""
-General Optuna tuning for LSTM, GRU, and Transformer models across multiple symbols.
-"""
 import argparse
 import json
 import optuna

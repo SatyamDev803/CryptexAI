@@ -4,7 +4,7 @@ import uvicorn
 from src.api import app
 
 def parse_args():
-    """Parse command line arguments."""
+    # Parse command line arguments
     parser = argparse.ArgumentParser(description="Bitcoin Price Prediction Backend")
     parser.add_argument(
         "--host", type=str, default="0.0.0.0",
